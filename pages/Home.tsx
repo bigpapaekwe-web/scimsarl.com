@@ -8,6 +8,7 @@ import VideoPlayer from '../components/VideoPlayer';
 import AnimatedCounter from '../components/AnimatedCounter';
 import MagneticButton from '../components/MagneticButton';
 import TextReveal from '../components/TextReveal';
+import DomainsSection from '../components/DomainsSection';
 
 /* Logos SVG simplifiés des clients de référence pour la preuve sociale */
 const CLIENT_LOGOS = [
@@ -153,6 +154,7 @@ const Home: React.FC = () => {
                   src="/welder.png"
                   alt="Soudeur SCIM au travail — étincelles et précision industrielle"
                   className="w-full h-full object-cover"
+                  loading="lazy"
                 />
               </div>
               {/* Badge cohérent avec KEY_METRICS */}
@@ -209,82 +211,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* ─── Section 3 : Nos Domaines d'Intervention ─── */}
-      <section className="py-32 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-20">
-            <h2 className="text-[11px] font-black text-orange-600 uppercase tracking-[0.5em] mb-6">Nos Domaines d'Intervention</h2>
-            <div className="flex justify-center">
-              <TextReveal text="Expertise Technique Complète" className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-slate-950 text-center" />
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            {SERVICES_DATA.map((service, index) => (
-              <motion.div
-                key={service.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="group relative bg-white rounded-[2.5rem] p-10 shadow-sm border border-slate-100 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 flex flex-col overflow-hidden"
-              >
-                <div className="absolute top-0 right-0 w-32 h-32 bg-orange-50 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
-                
-                <div
-                  className="relative h-48 w-full mb-8 rounded-2xl overflow-hidden shadow-md cursor-zoom-in"
-                  onClick={() => setLightboxImage(service.imageUrl)}
-                >
-                  <img src={service.imageUrl} alt={service.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                  <div className="absolute inset-0 bg-slate-950/20 group-hover:bg-transparent transition-colors"></div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <Maximize2 className="text-white w-8 h-8 opacity-0 group-hover:opacity-100 transform scale-50 group-hover:scale-100 transition-all duration-300" />
-                  </div>
-                  <div className="absolute top-4 left-4 bg-slate-950 text-orange-500 w-12 h-12 rounded-xl flex items-center justify-center shadow-lg group-hover:bg-orange-600 group-hover:text-white transition-colors duration-300 z-10">
-                    {getIcon(service.icon)}
-                  </div>
-                </div>
-
-                <h4 className="text-2xl font-black mb-4 uppercase tracking-tight text-slate-950 group-hover:text-orange-600 transition-colors relative z-10">
-                  {service.title}
-                </h4>
-                <p className="text-slate-500 mb-8 font-medium leading-relaxed text-sm relative z-10">
-                  {service.description}
-                </p>
-                <Link
-                  to="/services"
-                  className="mt-auto inline-flex items-center text-slate-400 font-black uppercase text-[10px] tracking-widest group-hover:text-orange-600 transition-colors relative z-10"
-                >
-                  Détails techniques <ChevronRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Barre de certifications */}
-          <div className="mt-24 pt-16 border-t border-slate-200">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-12">
-              <div className="max-w-xs text-center md:text-left">
-                <h5 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-2">Standards Internationaux</h5>
-                <p className="text-sm font-bold text-slate-900 uppercase tracking-tight">Nos processus sont audités et certifiés par les organismes leaders.</p>
-              </div>
-              <div className="flex flex-wrap justify-center md:justify-end gap-8 md:gap-16 items-center opacity-70 hover:opacity-100 transition-opacity duration-500 grayscale hover:grayscale-0">
-                {CERTIFICATIONS_DATA.slice(0, 5).map((cert) => (
-                  <div key={cert.id} className="group relative" title={cert.name}>
-                    <img
-                      src={cert.logoUrl}
-                      alt={cert.name}
-                      className="h-10 md:h-12 w-auto object-contain transition-all duration-500 group-hover:scale-110 group-hover:drop-shadow-[0_0_15px_rgba(249,115,22,0.3)]"
-                    />
-                    <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
-                      <span className="text-[8px] font-black text-orange-600 uppercase tracking-widest">{cert.name}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <DomainsSection onImageClick={setLightboxImage} />
 
       {/* ─── Section 4 : Témoignages Clients ─── */}
       <section className="py-32 bg-white overflow-hidden">
@@ -341,6 +268,7 @@ const Home: React.FC = () => {
                       src={testimonial.imageUrl}
                       alt={testimonial.name}
                       className="relative w-full h-full rounded-full object-cover border-2 border-orange-600 shadow-md group-hover:border-orange-500 transition-colors"
+                      loading="lazy"
                     />
                   </div>
                   <div>
@@ -348,7 +276,7 @@ const Home: React.FC = () => {
                       {testimonial.name}
                     </h4>
                     <p className="text-orange-600 text-[9px] font-bold uppercase tracking-widest">
-                      {testimonial.role}, {testimonial.company}
+                      {testimonial.role}
                     </p>
                   </div>
                 </div>
@@ -371,10 +299,11 @@ const Home: React.FC = () => {
                   src={testimonial.imageUrl}
                   alt={testimonial.name}
                   className="w-10 h-10 rounded-full object-cover border-2 border-orange-600 shrink-0"
+                  loading="lazy"
                 />
                 <div>
                   <p className="text-slate-900 font-black uppercase text-[9px] tracking-widest leading-none mb-1">{testimonial.name}</p>
-                  <p className="text-slate-500 text-[9px] font-medium uppercase tracking-wide">{testimonial.company}</p>
+                  <p className="text-slate-500 text-[9px] font-medium uppercase tracking-wide">{testimonial.role}</p>
                 </div>
                 <div className="ml-auto flex gap-0.5" role="img" aria-label="Note : 5 étoiles sur 5">
                   {[...Array(5)].map((_, i) => (
@@ -418,6 +347,7 @@ const Home: React.FC = () => {
                   src={project.imageUrl}
                   alt={project.title}
                   className="w-full h-full object-cover transition-transform duration-[2000ms] group-hover:scale-110"
+                  loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
                 <div className="absolute inset-0 bg-orange-600/20 opacity-0 group-hover:opacity-100 transition-opacity mix-blend-overlay"></div>
@@ -460,6 +390,7 @@ const Home: React.FC = () => {
                     src={cert.logoUrl}
                     alt={cert.name}
                     className="max-h-full max-w-full object-contain opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500"
+                    loading="lazy"
                   />
                 </div>
                 <h4 className="text-xl font-black uppercase tracking-tight mb-4 text-orange-500 group-hover:translate-x-1 transition-transform">{cert.name}</h4>
@@ -550,6 +481,7 @@ const Home: React.FC = () => {
               src={lightboxImage}
               alt="Détail industriel SCIM"
               className="max-w-full max-h-full object-contain rounded-2xl shadow-2xl border border-white/10"
+              loading="lazy"
             />
           </div>
         </div>
